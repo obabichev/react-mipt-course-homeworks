@@ -1,112 +1,100 @@
-import React from "react";
+import React, {useState} from "react";
 import axios from 'axios'
 import {Route} from "react-router-dom";
 import {validateAll} from 'indicative/validator';
+import {login} from "./App";
 
-export class Register extends React.Component {
+function Register (props) {
+    const [authData, setAuthData] =  useState({
+                login: '',
+                email: '',
+                password: '',
+                password_confirmation: '',
+                errors: {}
+    });
+    const [errors, setErrors] = useState({});
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            login: '',
-            email: '',
-            password: '',
-            password_confirmation: '',
-            errors: {}
-        };
-    }
-
-    onClick = () => {
+    const onClick = () => {
 
         const messages = {
             required: "This {{ field }} is required!",
             'email.email': "Invalid email",
             'password.confirmation': "Passwords doesn't match"
         }
-        console.log('[obabichev] submit form');
-        const data = this.state;
         const rules = {
             login: 'required|string',
             email: 'required|email',
             password: 'required|string|min:8|confirmed'
         }
-        validateAll(data, rules, messages)
+        validateAll(authData, rules, messages)
             .then(() => {
-                this.setState({errors: {}});
-                axios.post("http://httpbin.org/post", this.state)
-                    .then(responce =>{
-                        console.log(responce);
-                    })
-                    .catch(error=>{
-                        console.log(error);
-                    })
+                setErrors({});
+                fetch('/auth', {
+                    method: 'POST',
+                    body: JSON.stringify(authData)
+                })
+                    .then(r => r.json())
+                    .then(token => login(token))
                 console.log("all right")
             })
             .catch(errors => {
                 console.log(errors);
                 const formatter = {}
                 errors.forEach(error => formatter[error.field] = error.message)
-                this.setState({errors: formatter})
-                // console.log(this.state.errors.login)
+                setErrors(formatter);
             })
     };
 
-    onChange = (event) => {
-        this.setState({
-            [event.target.name]: event.target.value
-        })
+    const onChange = ({target: {name, value}}) => {
+        setAuthData({...authData, [name]:value});
     };
 
-    render() {
-        return (
+    return (
 
+        <div>
             <div>
-                <div>
-                    <span>
-                        Login
-                    </span>
-                    <input name="login" value={this.state.login} onChange={this.onChange}/>
-                </div>
-                <div>
-                    {this.state.errors.login &&
-                    <span className='error' style={{color: 'red'}}>{this.state.errors.login}</span>}
-                </div>
-                <div>
-                    <span>
-                        Email
-                    </span>
-                    <input name="email" value={this.state.email} onChange={this.onChange}/>
-                </div>
-                <div>
-                    {this.state.errors.email &&
-                    <span className='error' style={{color: 'red'}}>{this.state.errors.email}</span>}
-                </div>
-                <div>
-                    <span>
-                        Password
-                    </span>
-                    <input name="password" value={this.state.password} onChange={this.onChange}/>
-                </div>
-                <div>
-                    {this.state.errors.password &&
-                    <span className='error' style={{color: 'red'}}>{this.state.errors.password}</span>}
-                </div>
-                <div>
-                    <span>
-                        Repeat password
-                    </span>
-                    <input name="password_confirmation" value={this.state.repeatPassword} onChange={this.onChange}/>
-                </div>
-                <button onClick={this.onClick}>Click me</button>
-                <Route render={({ history}) => (
-                    <button
-                        onClick={() => { history.push('/login') }}
-                    >
-                        Log in
-                    </button>
-                )} />
+                <span>
+                    Login
+                </span>
+                <input name="login" onChange={onChange}/>
             </div>
-        );
-    }
+            <div>
+                {errors.login &&
+                <span className='error' style={{color: 'red'}}>{errors.login}</span>}
+            </div>
+            <div>
+                <span>
+                    Email
+                </span>
+                <input name="email" onChange={onChange}/>
+            </div>
+            <div>
+                {errors.email &&
+                <span className='error' style={{color: 'red'}}>{errors.email}</span>}
+            </div>
+            <div>
+                <span>
+                    Password
+                </span>
+                <input name="password" onChange={onChange}/>
+            </div>
+            <div>
+                {errors.password &&
+                <span className='error' style={{color: 'red'}}>{errors.password}</span>}
+            </div>
+            <div>
+                <span>
+                    Repeat password
+                </span>
+                <input name="password_confirmation" onChange={onChange}/>
+            </div>
+            <button onClick={onClick}>Click me</button>
+            <button
+                onClick={() => { props.history.push('/login') }}
+            >
+                Log in
+            </button>
+        </div>
+    );
 }
+export default Register;

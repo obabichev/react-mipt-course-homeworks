@@ -1,12 +1,27 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
-import {Login} from "./Login"
-import {Dashboard} from "./Dashboard";
-import {Register} from "./Register";
 
+import {Dashboard} from "./Dashboard";
+import Register from "./Register";
+import Login from "./Login"
+import {createAuthProvider} from "react-token-auth";
+
+// export const [useAuth, authFetch, login, logout] =
+// createAuthProvider({
+//     accessTokenKey: 'accessToken',
+// });
+export const [useAuth, authFetch, login, logout] =
+createAuthProvider({
+    accessTokenKey: 'accessToken',
+    onUpdateToken: (token) => fetch('/update-token', {
+        method: 'POST',
+        body: token[1]
+    })
+        .then(r => r.json())
+});
 
 function App() {
-    const auth = localStorage.getItem('AUTH');
+    const auth = useAuth();
     return (
         <div>
             <h2>

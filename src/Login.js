@@ -1,52 +1,63 @@
-import React from "react";
+import React, {useState} from "react";
+import {login, useAuth} from "./App"
+import {logout} from "./App";
 import {Register} from "./Register";
 import {Route} from "react-router-dom";
+import {createAuthProvider} from 'react-token-auth';
 
-export class Login extends React.Component {
-    constructor(props) {
-        super(props);
 
-        this.state = {
-            login: '',
-            password: ''
-        };
-    }
+function Login (props) {
 
-    onClick = () => {
-        localStorage.setItem('AUTH', "AUTH");
-    };
-
-    onChange = (event) => {
-        this.setState({
-            [event.target.name]: event.target.value
+    const [logdata, setLogdata] = useState({
+        login: '',
+        password: ''
+    });
+    const onClick = () => {
+        fetch('/login', {
+            method: 'POST',
+            body: JSON.stringify(logdata)
         })
+            .then(r => r.json())
+            .then(token => login(token))
     };
 
-    render() {
-        return (
-            <div>
-                <div>
-                    <span>
-                        Login
-                    </span>
-                    <input name="login" value={this.state.login} onChange={this.onChange}/>
-                </div>
-                <div>
-                    <span>
-                        Password
-                    </span>
-                    <input name="password" value={this.state.password} onChange={this.onChange}/>
-                </div>
-                <button onClick={this.onClick}>Log in</button>
-                <Route render={({ history}) => (
-                    <button
-                        onClick={() => { history.push('/register') }}
-                    >
-                        Sign up
-                    </button>
-                )} />
+    const onLogout = () =>{
+        logout();
+    };
 
+    const onChange = ({target: {name, value}}) => {
+        setLogdata({...logdata, [name]:value});
+    };
+
+    return (
+        <div>
+            <div>
+                <span>
+                    Login
+                </span>
+                <input name="login" onChange={onChange}/>
             </div>
-        );
-    }
+            <div>
+                <span>
+                    Password
+                </span>
+                <input name="password" onChange={onChange}/>
+            </div>
+            <button onClick={onClick}>Log in</button>
+
+            <div>
+                <button onClick={onLogout}>Log out</button>
+            </div>
+            <div>
+                <button
+                    onClick={() => { props.history.push('/register') }}
+                >
+                    Sign up
+                </button>
+            </div>
+
+        </div>
+    );
 }
+
+export default Login;
