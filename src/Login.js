@@ -12,12 +12,23 @@ function Login (props) {
         login: '',
         password: ''
     });
+    const [errors, setErrors] = useState({});
     const onClick = () => {
-        fetch('/login', {
+        const body = {
+            email: logdata.login,
+            password:logdata.password
+        }
+        fetch('https://react-mipt-course-server.herokuapp.com/auth/login', {
             method: 'POST',
-            body: JSON.stringify(logdata)
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(body)
         })
-            .then(r => r.json())
+            .then(r => {if (r.status!==200){
+                setErrors( {logError:r.message});
+                console.log(body);
+            }})
             .then(token => login(token))
     };
 
@@ -54,6 +65,10 @@ function Login (props) {
                 >
                     Sign up
                 </button>
+            </div>
+            <div>
+                {errors.logError &&
+                <span className='error' style={{color: 'red'}}>{errors.logError}</span>}
             </div>
 
         </div>

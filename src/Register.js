@@ -2,15 +2,14 @@ import React, {useState} from "react";
 import axios from 'axios'
 import {Route} from "react-router-dom";
 import {validateAll} from 'indicative/validator';
-import {login} from "./App";
+import {login, useAuth} from "./App";
 
 function Register (props) {
     const [authData, setAuthData] =  useState({
                 login: '',
                 email: '',
                 password: '',
-                password_confirmation: '',
-                errors: {}
+                password_confirmation: ''
     });
     const [errors, setErrors] = useState({});
 
@@ -28,14 +27,23 @@ function Register (props) {
         }
         validateAll(authData, rules, messages)
             .then(() => {
+
+                const body = {
+                    name: authData.login,
+                    email: authData.email,
+                    password: authData.password,
+                }
                 setErrors({});
-                fetch('/auth', {
+                fetch('https://react-mipt-course-server.herokuapp.com/auth/register', {
                     method: 'POST',
-                    body: JSON.stringify(authData)
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
                 })
-                    .then(r => r.json())
+                    .then(r => console.log(r))
                     .then(token => login(token))
-                console.log("all right")
+                    console.log("all right")
             })
             .catch(errors => {
                 console.log(errors);

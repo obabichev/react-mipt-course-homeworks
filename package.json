@@ -1,4 +1,5 @@
 {
+  "proxy": "https://react-mipt-course-server.herokuapp.com",
   "name": "react-mipt-course-homeworks",
   "version": "0.1.0",
   "private": true,
