@@ -18,7 +18,7 @@ function Login (props) {
             email: logdata.login,
             password:logdata.password
         }
-        fetch('https://react-mipt-course-server.herokuapp.com/auth/login', {
+        fetch('/auth/login', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

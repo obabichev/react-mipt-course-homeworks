@@ -34,7 +34,7 @@ function Register (props) {
                     password: authData.password,
                 }
                 setErrors({});
-                fetch('https://react-mipt-course-server.herokuapp.com/auth/register', {
+                fetch('/auth/register', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'
