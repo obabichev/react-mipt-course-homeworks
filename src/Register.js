@@ -5,8 +5,7 @@ export class Register extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: '',
-            lastName: '',
+            name: '',
             email: '',
             password: '',
             repeatPassword: ''
@@ -14,7 +13,7 @@ export class Register extends React.Component {
     }
 
     onClick = () => {
-        if (this.validateFirstName() &&
+        if (this.validateName() &&
             this.validateEmail() &&
             this.validatePassword() &&
             this.validateRepeatedPassword()
@@ -24,9 +23,9 @@ export class Register extends React.Component {
         }
     };
 
-    validateFirstName = () => {
-        if (!this.state.firstName) {
-            alert("First name can't be empty");
+    validateName = () => {
+        if (!this.state.name) {
+            alert("Name can't be empty");
             return false
         }
         return true
@@ -68,10 +67,7 @@ export class Register extends React.Component {
         return (
             <div>
                 <div>
-                    <input name="firstName" placeholder="First name" value={this.state.name} onChange={this.onChange}/>
-                </div>
-                <div>
-                    <input name="lastName" placeholder="Last name" value={this.state.name} onChange={this.onChange}/>
+                    <input name="name" placeholder="Your name" value={this.state.name} onChange={this.onChange}/>
                 </div>
                 <div>
                     <input name="email" placeholder="Email" value={this.state.email} onChange={this.onChange}/>
