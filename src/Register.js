@@ -1,4 +1,5 @@
 import React from "react";
+import {loginPath} from "./App";
 
 export class Register extends React.Component {
     constructor(props) {
@@ -19,7 +20,7 @@ export class Register extends React.Component {
             this.validateRepeatedPassword()
         ) {
             alert("Registration successful");
-            this.props.history.push("/login")
+            this.props.history.push(loginPath)
         }
     };
 
@@ -83,6 +84,7 @@ export class Register extends React.Component {
                            onChange={this.onChange}/>
                 </div>
                 <button onClick={this.onClick}>Sign up</button>
+                <button onClick={() => {this.props.history.push(loginPath)}}>Already have an account?</button>
             </div>
         );
     }

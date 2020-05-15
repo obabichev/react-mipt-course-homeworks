@@ -4,6 +4,9 @@ import {Register} from "./Register";
 import {Dashboard} from "./Dashboard";
 import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom"
 
+export const loginPath = '/login';
+export const registerPath = '/register';
+
 function App() {
     const auth = localStorage.getItem("auth");
 
@@ -11,9 +14,9 @@ function App() {
         <div>
             <Router>
                 {!auth && <Switch>
-                    <Route path="/login" component={Login}/>
-                    <Route path="/register" component={Register}/>
-                    <Redirect to="/login"/>
+                    <Route path={loginPath} component={Login}/>
+                    <Route path={registerPath} component={Register}/>
+                    <Redirect to={loginPath}/>
                 </Switch>}
                 {!!auth && <Switch>
                     <Route exact path="/" component={Dashboard}/>
