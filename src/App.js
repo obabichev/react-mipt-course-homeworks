@@ -1,18 +1,17 @@
-import React from "react";
-import {Login} from "./Login";
-import {Register} from "./Register";
+import React, {Component} from 'react';
 import {BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
-import {Dashboard} from "./Dashboard";
-import {BoardsPage} from './components/board/BoardsPage';
-import {CreateBoardPage} from './components/board/CreateBoardPage';
-
+import './App.css';
+import {Login} from "../src/components/Login";
+import {Register} from "./components/Register";
+import {Welcome} from "./components/Welcome";
+import {Page404} from "./components/Page404";
+import {MainPage} from "./components/MainPage";
 
 const withAuth = (Component, auth) => {
     return (props) => {
         return <Component {...props} auth={auth}/>
     };
 };
-
 
 class App extends React.Component {
     constructor(props) {
@@ -22,37 +21,32 @@ class App extends React.Component {
 
         this.state = {
             tokens: tokens || null
-        }
+        };
     }
 
     auth = (tokens) => {
-        this.setState({tokens})
-    };
-
-    render() {
-        const {tokens} = this.state;
-        return (
-            <div>
-                <h2>
-                    My App
-                </h2>
-                <Router>
-                    {!tokens && <Switch>
-                        <Route path="/login" component={Login}/>
-                        <Route path="/register" component={withAuth(Register, this.auth)}/>
-                        <Redirect to="/login"/>
-                    </Switch>}
-                    {!!tokens && <Switch>
-                        <Route exact path="/" component={Dashboard}/>
-                        <Route exact path="/boards" component={BoardsPage}/>
-                        <Route exact path="/create-board" component={CreateBoardPage}/>
-                        <Redirect to="/"/>
-                    </Switch>}
-                </Router>
-            </div>
-        );
+        this.setState({tokens: tokens})
     }
+
+  render() {
+    const {tokens} = this.state;
+    return (
+        <div className={"App"}>
+              <Router>
+                 {!tokens &&<Switch>
+                      <Route exact={true} path="/" component={Welcome}/>
+                      <Route path="/register" component={withAuth(Register, this.auth)}/>
+                      <Route path="/login" component={withAuth(Login, this.auth)}/>
+                      <Redirect to="/"/>
+                      <Route component={Page404}/>
+                  </Switch>}
+                  {!!tokens &&<Switch>
+                      <Route path="/boards" component={withAuth(MainPage, this.auth)}/>
+                      <Redirect to="/boards"/>
+                  </Switch>}
+              </Router>
+        </div>
+    );
+  }
 }
-
-
 export default App;
