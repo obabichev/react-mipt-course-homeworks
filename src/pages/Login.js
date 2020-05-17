@@ -1,6 +1,6 @@
 import React from "react";
-import {registerPath, updateTokens} from "../App";
-import {login} from "../service/login";
+import {login as fetchLogin} from "../service/login" ;
+import {login, registerPath} from "../App";
 
 export class Login extends React.Component {
     constructor(props) {
@@ -12,9 +12,9 @@ export class Login extends React.Component {
     }
 
     onCLick = () => {
-        login(this.state)
+        fetchLogin(this.state)
             .then((result) => {
-                updateTokens(result);
+                login(result);
                 alert("You are successfully logged in!")
             })
             .catch((error) => {

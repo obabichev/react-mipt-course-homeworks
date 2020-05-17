@@ -1,6 +1,6 @@
 import React from "react";
-import {loginPath, updateTokens} from "../App";
 import {register} from "../service/register";
+import {login, loginPath} from "../App";
 
 export class Register extends React.Component {
     constructor(props) {
@@ -22,7 +22,7 @@ export class Register extends React.Component {
             'password': this.state.password
         })
             .then((result) => {
-                updateTokens(result);
+                login(result);
                 alert("Registration successful!")
             })
             .catch((error) => {

@@ -1,8 +1,8 @@
 import * as React from "react";
-import {updateTokens} from "../App";
+import {logout} from "../App";
 
 export class Logout extends React.Component {
     render() {
-        return <button onClick={() => {updateTokens('');}}>Logout</button>
+        return <button onClick={logout}>Logout</button>
     }
 }
