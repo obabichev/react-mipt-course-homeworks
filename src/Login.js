@@ -1,5 +1,6 @@
 import React from "react";
-import {registerPath} from "./App";
+import {registerPath, updateTokens} from "./App";
+import {login} from "./service/login";
 
 export class Login extends React.Component {
     constructor(props) {
@@ -11,7 +12,14 @@ export class Login extends React.Component {
     }
 
     onCLick = () => {
-        localStorage.setItem("auth", "ok")
+        login(this.state)
+            .then((result) => {
+                updateTokens(result);
+                alert("You are successfully logged in!")
+            })
+            .catch((error) => {
+                alert(error.message)
+            });
     };
 
     onChange = (event) => {
