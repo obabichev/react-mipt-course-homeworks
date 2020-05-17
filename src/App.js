@@ -1,7 +1,7 @@
 import React from 'react';
-import {Login} from "./Login";
-import {Register} from "./Register";
-import {Dashboard} from "./Dashboard";
+import {Login} from "./pages/Login";
+import {Register} from "./pages/Register";
+import {Dashboard} from "./pages/Dashboard";
 import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom"
 
 export const loginPath = '/login';

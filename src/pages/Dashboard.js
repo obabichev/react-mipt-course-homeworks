@@ -1,5 +1,5 @@
 import React from "react";
-import {Logout} from "./Logout";
+import {Logout} from "../components/Logout";
 
 export class Dashboard extends React.Component {
     render() {

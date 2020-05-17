@@ -1,6 +1,6 @@
 import React from "react";
-import {loginPath, updateTokens} from "./App";
-import {register} from "./service/register";
+import {loginPath, updateTokens} from "../App";
+import {register} from "../service/register";
 
 export class Register extends React.Component {
     constructor(props) {
