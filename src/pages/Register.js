@@ -23,7 +23,6 @@ export class Register extends React.Component {
         })
             .then((result) => {
                 login(result);
-                alert("Registration successful!")
             })
             .catch((error) => {
                 alert(error.message)

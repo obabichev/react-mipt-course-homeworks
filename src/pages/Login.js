@@ -15,7 +15,6 @@ export class Login extends React.Component {
         fetchLogin(this.state)
             .then((result) => {
                 login(result);
-                alert("You are successfully logged in!")
             })
             .catch((error) => {
                 alert(error.message)
