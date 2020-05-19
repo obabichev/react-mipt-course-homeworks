@@ -9,6 +9,11 @@ export const loginPath = '/login';
 export const registerPath = '/register';
 export const [useAuth, authFetch, login, logout] = createAuthProvider({
     accessTokenKey: 'accessToken',
+    onUpdateToken: (token) => fetch('/auth/update-tokens', {
+        method: 'POST',
+        body: token.refreshToken
+    })
+        .then(r => r.json())
 });
 
 function App() {
