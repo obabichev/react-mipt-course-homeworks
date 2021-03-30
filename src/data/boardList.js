@@ -91,6 +91,27 @@ const boardList = [
       __v: 0
     },
     __v: 0
+  },
+  {
+    category: {
+      key: "tech",
+      value: "Technology"
+    },
+    icon: {
+      key: "1",
+      value: "/images/board-logo/1.svg"
+    },
+    tasks: [],
+    _id: "6058cef018d92c001d99fa55",
+    title: "testboard 4",
+    key: "TB4",
+    owner: {
+      _id: "6058ce6b18d92c001d99fa54",
+      name: "test4678",
+      email: "test4678",
+      __v: 0
+    },
+    __v: 0
   }
 ];
 

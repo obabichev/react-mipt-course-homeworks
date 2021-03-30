@@ -1,0 +1,19 @@
+body {
+  background-color: white;
+}
+
+table {
+  border-collapse: collapse;
+  border: 1px solid rgb(98, 240, 98);
+  width: 80%;
+  padding: 10px;
+}
+
+table tr:hover {
+  background-color: rgb(98, 240, 98);
+}
+
+table td {
+  width: 25%;
+  padding: 2%;
+}

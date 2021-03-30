@@ -1,21 +1,12 @@
 import React from "react";
-import Header from "./Header";
 import BoardList from "./BoardList";
-import BoardListItem from "./BoardListItem";
+import BoardTaskList from "./BoardTaskList";
 
 const App = () => {
   return (
     <div>
-      <Header />
-      <button>Create Board</button>
-      <br />
-      <br />
       <BoardList />
-      <br />
-      <button>Create Task</button>
-      <br />
-      <br />
-      <BoardListItem />
+      <BoardTaskList />
     </div>
   );
 };
