@@ -1,7 +1,18 @@
 import React from "react";
+import {Normalized, TaskType} from "../../types/types";
 
-function Task({taskId, tasks}) {
-    const task = tasks.find(task => task._id === taskId);
+interface TaskProps {
+    taskId: string;
+    tasks: Normalized<TaskType>;
+}
+
+export const Task = ({taskId, tasks}: TaskProps) => {
+
+    const task = tasks[taskId];
+
+    if (!task) {
+        return null;
+    }
 
     return <div>
         <div style={{display: "grid", textAlign: "left"}}>
@@ -14,5 +25,3 @@ function Task({taskId, tasks}) {
         </div>
     </div>
 }
-
-export default Task;
